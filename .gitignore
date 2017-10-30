@@ -28,9 +28,9 @@ Obj/
 
 # Visual Studio 2015 cache/options directory
 .vs/
-/wwwroot/dist/
+**/dist/
 
-/yarn.lock
+**/yarn.lock
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
