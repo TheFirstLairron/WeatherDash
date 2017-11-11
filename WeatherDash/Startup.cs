@@ -7,14 +7,23 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WeatherDash.DataAccess;
 
 namespace WeatherDash
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+
+            var builder = new ConfigurationBuilder();
+
+            if(env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -22,7 +31,10 @@ namespace WeatherDash
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            const string CONFIG_NAME = "WeatherDash4B";
+
             services.AddMvc();
+            services.AddTransient<UserAccess>((provider) => new UserAccess(this.Configuration[CONFIG_NAME]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
