@@ -72,7 +72,7 @@ export class CityView extends React.Component<CityViewProps, CityViewState>{
         }).catch(() => {
             this.setState({
                 ...this.state,
-                loading: true
+                loading: false
             })
         });
     }
